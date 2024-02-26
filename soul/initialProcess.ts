@@ -2,7 +2,7 @@ import { externalDialog, mentalQuery } from "socialagi";
 import { MentalProcess, useActions, useProcessManager, useProcessMemory } from "soul-engine";
 import correct from "./mentalProcesses/correct.js";
 
-const gainsTrustWithTheUser: MentalProcess = async ({ step: initialStep }) => {
+const engageInDebate: MentalProcess = async ({ step: initialStep }) => {
   const volume = useProcessMemory(10)
   const { speak, log, scheduleEvent } = useActions()
   const { setNextProcess } = useProcessManager()
@@ -16,7 +16,7 @@ const gainsTrustWithTheUser: MentalProcess = async ({ step: initialStep }) => {
   // increase volume in 10s
 
   const lastStep = await nextStep
-  const lied = await lastStep.compute(mentalQuery("The user lied or is inaccurate about a fact."))
+  const lied = await lastStep.compute(mentalQuery("The user lied."))
   log("User lied:", lied)
   if (lied) {
     log("Lie detected. Increasing alarm volume")
@@ -30,4 +30,4 @@ const gainsTrustWithTheUser: MentalProcess = async ({ step: initialStep }) => {
   return lastStep
 }
 
-export default gainsTrustWithTheUser
+export default engageInDebate
